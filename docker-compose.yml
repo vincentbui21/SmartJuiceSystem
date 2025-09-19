@@ -1,0 +1,24 @@
+
+services:
+  backend:
+    build: ./Backend
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./Backend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    env_file:
+      - ./Backend/.env
+    network_mode: "host"
+
+  frontend:
+    build: ./Frontend
+    ports:
+      - "80:5173"
+    volumes:
+      - ./Frontend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
