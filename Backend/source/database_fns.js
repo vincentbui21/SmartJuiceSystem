@@ -7,16 +7,18 @@ const recentRequests = new Map(); // key -> timestamp (in-memory; use Redis for 
 const IDEMPOTENCY_TTL_MS = 10_000;
 
 // Create connection pool
+// Create connection pool
 const pool = mysql.createPool({
-    host: process.env.host,
-    port: process.env.port,
-    user: process.env.user,
-    password: process.env.password,
-    database: process.env.database,
+    host: process.env.DATABASE_HOST || "db",
+    port: process.env.DATABASE_PORT || 3306,
+    user: process.env.DATABASE_USER || "admin",
+    password: process.env.DATABASE_PASSWORD || "admin",
+    database: process.env.DATABASE_NAME || "smartjuice",
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
 }).promise();
+
 
 async function update_new_customer_data(customer_data, order_data) {
     const connection = await pool.getConnection();
