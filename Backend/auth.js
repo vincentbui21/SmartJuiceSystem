@@ -5,7 +5,7 @@ const database = require("./source/database_fns");
 require("dotenv").config();
 
 const router = express.Router();
-const JWT_SECRET = process.env.JWT_SECRET || "defaultsecret"; // fallback if missing
+const JWT_SECRET = process.env.JWT_SECRET || "b7f138391501125fb0eec1e386d509861608e088db5bdd7aaa1a70c82eb6e68fb17a8db6bb70668d7a4a3424264c0868057a8ed356702680c84c5ffd2a512523"; // fallback if missing
 
 // Login route
 router.post("/login", async (req, res) => {
