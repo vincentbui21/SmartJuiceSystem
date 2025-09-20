@@ -63,8 +63,8 @@ The system streamlines everything from customer entry to final pickup — with o
 Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/juice-packaging.git
-cd juice-packaging
+git clone https://github.com/vincentbui21/SmartJuiceSystem.git
+cd SmartJuiceSystem
 ```
 Build and start containers:
 
@@ -82,17 +82,9 @@ Stop containers:
 ```bash
 docker compose down
 ```
-⚙️ Environment Variables
-Create a .env file inside the backend folder:
-
+⚙️ Environment Variables (Optional)
+You can create a .env file in the backend folder to configure optional features like AWS SNS:
 ```env
-
-# Database connection (AWS RDS)
-host=
-user=
-password=
-database=
-
 # AWS SNS configuration
 AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=
@@ -100,28 +92,18 @@ SNS_TOPIC_ARN=
 AWS_REGION=
 DEFAULT_SMS_COUNTRY_CODE=+358
 ```
-AWS RDS → stores all system data.
-
-AWS SNS → sends SMS notifications.
-
-👉 You can replace AWS RDS with any local PostgreSQL/MySQL instance.
+These are entirely optional. The system will work fully without them — SMS notifications and auto-label printing will simply be disabled.
 👉 If AWS SNS or the industrial printer aren’t available, the system still works — just without SMS and auto-printing.
 
 ---
-## 🖥 Running Without Docker
-- Open a terminal
-```Backend
-cd backend
-npm install
-npm run dev
-```
-- Open a new terminal
-```Frontend
-cd frontend
-npm install
-npm run dev
-```
-The app will start with hot reload enabled.
+## 🔄 Workflow Summary
+1. Login: Use the employee account (employee / employee123) to access the system.
+2. Add a New Customer: Enter customer details → generate crate QR codes.
+3. Crate Scanning: Scan crates → order moves to juice processing.
+4. Juice Processing: Fill pouches → generate box QR codes → send to printer (optional).
+5. Load Boxes → Pallet: Scan boxes → assign to pallets.
+6. Load Pallet → Shelf: Scan pallets → assign to shelves → SMS notification sent (if configured).
+7. Pickup Coordination: Search by customer → mark orders as picked up.
 
 ---
 ## ⚠️ Notes
@@ -134,5 +116,5 @@ Alternative database setups are supported (local PostgreSQL/MySQL).
 
 ## 🗃️Database Setup
 
-Before running the backend, make sure to create your database by following the schema defined in **Database/database_schema.sql**.
-This ensures all tables and relationships are correctly set up for the system to function properly.
+Before running the backend, the database will be automatically initialized by Docker using the files in Database/.
+Optional: You can replace AWS RDS with any local PostgreSQL/MySQL instance if preferred.
